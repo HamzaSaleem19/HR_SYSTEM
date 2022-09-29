@@ -1,0 +1,105 @@
+﻿@page "/Departments"
+@using HR_SYSTEM.Models
+@using HR_SYSTEM.Services
+@inject DepartmentService departmentService
+@using System.Collections.Generic;
+
+
+
+<button type="button" class="btn btn-primary float-right" data-toggle="modal" data-target="#exampleModal">
+    Add Department
+</button>
+
+
+<h1> Current Departments </h1>
+@if (Depob is null)
+{
+    <p><em>Loading... !</em></p>
+}
+else
+{
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Department</th>
+                <th>Landline Number</th>
+                <th>Location</th>
+                <th>Company</th>
+                <th>Action</th>
+
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var dep in Depob)
+            {
+                <tr>
+                    <td>@dep.DepName</td>
+                    <td>@dep.LandlineNumber</td>
+                    <td>@dep.Location</td>
+                    <td>@dep.Company?.Name</td>
+                    <td>
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" @onclick="()=>UpdateDepartment(dep.DepId)">  Edit </button>
+                        <button type="button" class="btn btn-danger" @onclick="()=>DeleteDepartment(dep.DepId)">  Delete </button>
+                    </td>
+
+                </tr>
+            }
+        </tbody>
+
+    </table>
+}
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">@(obj1.DepId==0?"Add New Department":"Edit Department")</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <EditForm Model="obj1" OnValidSubmit="@CreateDepartment">
+
+                    <InputSelect @bind-Value="@obj1.CompanyRegNo" class="form-control">
+                        @*<option selected disabled="disabled">-- Select Department --</option>*@
+                        <option value="0">-- Select Company --</option>
+                        @foreach (var comp1 in CompanyList)
+                        {
+                            <option value="@comp1.Value">@comp1.Text</option>
+                        }
+                    </InputSelect>
+                    <div class="row">
+                        <div class="col-md-8">
+                            <div class="form-group">
+                                <label for="Name" class="control-label">Department Name</label>
+                                <input form="Name" class="form-control" @bind="@obj1.DepName" />
+                            </div>
+                            <div class="form-group">
+                                <label for="LandlineNumber" class="control-label">LandlineNumber</label>
+                                <input form="LandlineNumber" class="form-control" @bind="@obj1.LandlineNumber" />
+                            </div>
+                            <div class="form-group">
+                                <label for="Location" class="control-label">Location</label>
+                                <input form="Location" class="form-control" @bind="@obj1.Location" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <input type="submit" class="btn btn-primary" value="Save" />
+
+                                <input type="button" class="btn btn-primary float-md-right" @onclick="@Cancel" data-dismiss="modal" value="Cancel" />
+                            </div>
+                        </div>
+                    </div>
+
+                </EditForm>
+
+            </div>
+        </div>
+    </div>
+</div>
+

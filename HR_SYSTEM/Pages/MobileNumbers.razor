@@ -1,0 +1,128 @@
+﻿@page "/Mobile Numbers"
+
+@using HR_SYSTEM.Services
+
+@using System.Collections.Generic;
+
+
+<button type="button" class="btn btn-primary float-right" data-toggle="modal" data-target="#exampleModal">
+    Add Mobile Number
+</button>
+
+
+<h1>  Mobile Numbers </h1>
+@if (Mobileob is null)
+{
+    <p><em>Loading... !</em></p>
+}
+else
+{
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Mobile Id</th>
+                <th>Mobile Number</th>
+                <th>Employee</th>
+                <th>Action</th>
+
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var mobnumb in Mobileob as List<HR_SYSTEM.Models.MobileNo>)
+            {
+                <tr>
+                    <td>@mobnumb.MobileId</td>
+                    <td>@mobnumb.MobileNumber</td>
+                    <td>@mobnumb.Employee?.Name</td>
+                    <td>
+                        <button type="button" class="btn btn-primary " data-toggle="modal" data-target="#exampleModal" @onclick="()=> UpdatMobileNumber(mobnumb.MobileId)">  Edit </button>
+
+                        <button type="button" class="btn btn-danger" @onclick="()=>DeleteMobileNumber(mobnumb.MobileId)">  Delete </button>
+                    </td>
+
+                    <td>
+                    </td>
+                </tr>
+            }
+        </tbody>
+
+    </table>
+}
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">@(addnumber.MobileId==0?"Add New Mobile Number":"Edit Mobile Number")</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <EditForm Model="addnumber" OnValidSubmit="@CreateMobilenumber">
+                    <DataAnnotationsValidator />
+                    <ValidationSummary></ValidationSummary>
+
+                    <div class="form-group">
+                        <label class="control-label">Company</label>
+
+                        <InputSelect class="form-control" ValueExpression="@(() => addnumber.CompanyRegNo)" Value="@addnumber.CompanyRegNo" ValueChanged="@((int value) => GetDepartmentCompanywise(value))">
+                            <option value="0">-- Select Company --</option>
+                            @foreach (var comp1 in CompanyList)
+                            {
+                                <option value="@comp1.Value">@comp1.Text</option>
+                            }
+                        </InputSelect>
+
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">Department</label>
+
+                        <InputSelect class="form-control" ValueExpression="@(() => addnumber.DepId)" Value="@addnumber.DepId" ValueChanged="@((int value) =>GetEmployeeDepartmentwise(value))">
+                            <option value="0">-- Select Department --</option>
+                            @foreach (var dep1 in DepartmentList)
+                            {
+                                <option value="@dep1.Value">@dep1.Text</option>
+                            }
+                        </InputSelect>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">Employee</label>
+
+                        <InputSelect @bind-Value="@addnumber.EmpId" class="form-control">
+                            <option value="0">-- Select Employee --</option>
+                            @foreach (var employee1 in EmployeeList)
+                            {
+                                <option value="@employee1.Value">@employee1.Text</option>
+                            }
+                        </InputSelect>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-8">
+                            <div class="form-group">
+                                <label for="Mobile Number" class="control-label">Mobile Number</label>
+                                <input form="Mobile Number" class="form-control" @bind="@addnumber.MobileNumber" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <input type="submit" class="btn btn-primary" value="Save" />
+
+                                <input type="button" class="btn btn-primary float-md-right" @onclick="@Cancel" data-dismiss="modal" value="Cancel" />
+                            </div>
+                        </div>
+                    </div>
+                </EditForm>
+
+            </div>
+        </div>
+    </div>
+</div>
+
