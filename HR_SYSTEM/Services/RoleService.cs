@@ -17,7 +17,17 @@ namespace HR_SYSTEM.Services
             }
             public async Task<List<Role>> GetAllRolesAsync()
             {
+            try
+            {
+ 
                 return await _appDBContext.Roles.ToListAsync();
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+                
             }
             public async Task<bool> InsertRoleAsync(Role role)
             {

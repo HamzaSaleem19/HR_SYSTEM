@@ -50,27 +50,21 @@ namespace HR_SYSTEM.Pages
         void Cancel()
         {
             addnumber = new();
-
             StateHasChanged();
         }
         protected async void UpdatMobileNumber(int MobileId)
         {
             try
             {
-                
                 addnumber = await mobileService.GetMobileNumberAsync(MobileId);
                 DepartmentList = await employeeService.GetDepartments();
                 EmployeeList = await employeeService.GetEmployees();
                 StateHasChanged();
             }
-
             catch (Exception ex)
             {
-
                 throw;
             }
-
-
         }
         protected async void DeleteMobileNumber(int MobileId)
         {
@@ -81,7 +75,6 @@ namespace HR_SYSTEM.Pages
             }
             catch (Exception ex)
             {
-
                 throw;
             }
         }

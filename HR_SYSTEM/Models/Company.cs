@@ -8,6 +8,7 @@ namespace HR_SYSTEM.Models
     {
         [Key]
         public int CompanyRegNo { get; set; }
+        [Required]
         public string Name { get; set; }
         public string LandlineNo { get; set; }
         public string Address { get; set; }

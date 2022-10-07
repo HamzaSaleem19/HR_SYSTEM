@@ -11,7 +11,7 @@ namespace HR_SYSTEM.Pages
     {
         public List<SelectListItem> DepartmentList = new();
         [Inject]
-        public EmployeeService empployeeService  { get; set; }
+        public EmployeeService empployeeService { get; set; }
 
         public List<HR_SYSTEM.Models.Company> Compob = new();
         [Inject]
@@ -25,12 +25,10 @@ namespace HR_SYSTEM.Pages
         {
             await companyService.InsertCompanyAsync(addcompanydata);
             NavigationManager.NavigateTo("Companies", true);
-
         }
         void Cancel()
         {
             addcompanydata = new();
-
             StateHasChanged();
         }
         protected async void UpdateCompany(int CompId)
@@ -42,14 +40,10 @@ namespace HR_SYSTEM.Pages
                 //NavigationManager.NavigateTo("Employees");
                 StateHasChanged();
             }
-
             catch (Exception ex)
             {
-
                 throw;
             }
-
-
         }
         protected async void DeleteCompany(int CompId)
         {
@@ -60,7 +54,6 @@ namespace HR_SYSTEM.Pages
             }
             catch (Exception ex)
             {
-
                 throw;
             }
         }

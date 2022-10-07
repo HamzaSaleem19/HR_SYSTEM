@@ -2,12 +2,10 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System;
-
 namespace HR_SYSTEM.Pages
 {
     public partial class Roles
     {
-
         public List<HR_SYSTEM.Models.Role> Roleob = new();
         [Inject]
         public NavigationManager NavigationManager { get; set; }
@@ -25,26 +23,20 @@ namespace HR_SYSTEM.Pages
         void Cancel()
         {
             addrole = new();
-
             StateHasChanged();
         }
         protected async void UpdateRole(int RoleId)
         {
             try
             {
-                
                 addrole = await roleService.GetRoleAsync(RoleId);
                 //NavigationManager.NavigateTo("Employees");
                 StateHasChanged();
             }
-
             catch (Exception ex)
             {
-
                 throw;
             }
-
-
         }
         protected async void DeleteRole(int RoleId)
         {
@@ -55,7 +47,6 @@ namespace HR_SYSTEM.Pages
             }
             catch (Exception ex)
             {
-
                 throw;
             }
         }

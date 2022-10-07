@@ -8,6 +8,7 @@ namespace HR_SYSTEM.Models
     {
         [Key]
         public int DepId { get; set; }
+        [Required]
         public string DepName { get; set; }
         public string LandlineNumber { get; set; }
         public string Location { get; set; }

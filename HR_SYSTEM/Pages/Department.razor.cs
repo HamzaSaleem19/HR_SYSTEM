@@ -16,20 +16,12 @@ namespace HR_SYSTEM.Pages
         {
             Depob = await departmentService.GetAllDepartmentsAsync();
             CompanyList = await departmentService.GetCompanies();
-
         }
-    
-
-
-     public   HR_SYSTEM.Models.Department obj1 = new();
-        
-
+        public HR_SYSTEM.Models.Department obj1 = new();
         protected async void CreateDepartment()
         {
-
             await departmentService.InsertDeparmentAsync(obj1);
             NavigationManager.NavigateTo("Departments", true);
-
         }
         void Cancel()
         {
@@ -41,19 +33,14 @@ namespace HR_SYSTEM.Pages
         {
             try
             {
-
                 obj1 = await departmentService.GetDepartmentAsync(DepId);
                 //NavigationManager.NavigateTo("Employees");
                 StateHasChanged();
             }
-
             catch (Exception ex)
             {
-
                 throw;
             }
-
-
         }
         protected async void DeleteDepartment(int DepId)
         {
@@ -64,7 +51,6 @@ namespace HR_SYSTEM.Pages
             }
             catch (Exception ex)
             {
-
                 throw;
             }
         }

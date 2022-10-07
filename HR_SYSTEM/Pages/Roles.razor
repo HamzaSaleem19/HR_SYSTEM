@@ -1,15 +1,9 @@
 ﻿@page "/Roles"
-
 @using HR_SYSTEM.Services
-
 @using System.Collections.Generic;
-
-
 <button type="button" class="btn btn-primary float-right" data-toggle="modal" data-target="#exampleModal">
     Add Role
 </button>
-
-
 <h1>  Roles </h1>
 @if (Roleob is null)
 {
@@ -23,10 +17,6 @@ else
                 <th>Role Id</th>
                 <th>Role</th>
                 <th>Action</th>
-
-
-
-
             </tr>
         </thead>
         <tbody>
@@ -45,8 +35,6 @@ else
 
     </table>
 }
-
-
 <!-- Modal -->
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">

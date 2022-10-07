@@ -3,13 +3,9 @@
 @using HR_SYSTEM.Services
 @inject DepartmentService departmentService
 @using System.Collections.Generic;
-
-
-
 <button type="button" class="btn btn-primary float-right" data-toggle="modal" data-target="#exampleModal">
     Add Department
 </button>
-
 
 <h1> Current Departments </h1>
 @if (Depob is null)
@@ -60,7 +56,7 @@ else
             </div>
             <div class="modal-body">
                 <EditForm Model="obj1" OnValidSubmit="@CreateDepartment">
-
+                    <DataAnnotationsValidator />
                     <InputSelect @bind-Value="@obj1.CompanyRegNo" class="form-control">
                         @*<option selected disabled="disabled">-- Select Department --</option>*@
                         <option value="0">-- Select Company --</option>
@@ -74,6 +70,7 @@ else
                             <div class="form-group">
                                 <label for="Name" class="control-label">Department Name</label>
                                 <input form="Name" class="form-control" @bind="@obj1.DepName" />
+                                <ValidationMessage For="@(() => obj1.DepName)" />
                             </div>
                             <div class="form-group">
                                 <label for="LandlineNumber" class="control-label">LandlineNumber</label>
