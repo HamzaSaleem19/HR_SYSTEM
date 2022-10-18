@@ -34,6 +34,17 @@ namespace HR_SYSTEM.Services
                         item.MobileNumber += String.Join(",  " ,"  "+item1.MobileNumber);
                     }
                 }
+                var Listofemployee = (from e in _appDBContext.Employees
+                                      join m in _appDBContext.MobileNumbers on e.EmpId equals m.EmpId
+                                      join d in _appDBContext.Departments on e.DepId equals d.DepId
+                                      join c in _appDBContext.Companies on d.CompanyRegNo equals c.CompanyRegNo
+                                      join r in _appDBContext.Roles on e.RoleId equals r.RoleId
+                                      select e).ToList();
+
+
+
+
+
                 
                 return employeeData;
             }
