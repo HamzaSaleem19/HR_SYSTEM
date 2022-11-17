@@ -17,8 +17,24 @@ namespace HR_SYSTEM.Models
         public DbSet<Department> Departments { get; set; }
         public DbSet<MobileNo> MobileNumbers { get; set; }
         public DbSet<Role> Roles { get; set; }
+        public DbSet<ANR> ANRs { get; set; }
+        public DbSet<Country> Countries { get; set; }
+        public DbSet<Province> Provinces { get; set; }
+        public DbSet<Division> Divisions { get; set; }
+        public DbSet<District> Districts { get; set; }
+        public DbSet<Tehsil> Tehsils { get; set; }
 
-
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Country>().HasData(
+                new Country
+                {
+                    Id= 1,
+                    Name = "Pakistan",
+                    
+                }
+            );
+        }
     }
 }
 

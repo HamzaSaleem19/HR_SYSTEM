@@ -1,0 +1,168 @@
+﻿@page "/ANR/AddANR"
+<div class="row">
+    <div class="col-md-12">
+        <a class="btn btn-primary btn btn-primary mb-3 float-right text-white">View ANR Activites</a>
+    </div>
+</div>
+<div class="card">
+    <div class="card-header bg-success text-white"> Add ANR Data</div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="">Date of Activity  (mm/dd/yyyy)</label>
+                    <input type="date" class="form-control" @bind=@addanr.DateofActivity>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="">Site Name/Location</label>
+                  <input type="text" class="form-control" @bind=@addanr.SiteName>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="">Legal Forest Type</label>
+                    <select class="form-control" @bind=@addanr.ForestType>
+                        <option>Select Forest Type</option>
+                        <option>Shadra Forest</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="">Date of Enclosure Establishment / Dry Afforestation</label>
+                    <input type="date" class="form-control" @bind=@addanr.DateofEnclosure>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="">Protection Mechanism</label>
+                    <select class="form-control" @bind=@addanr.ProtectionMechanism>
+                        <option>Select Protection Mechanism</option>
+                        <option>Boundary Wall</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="">Establishment Mechanism/Community Involvement</label>
+                    <input type="text" class="form-control"  placeholder="Enter Establishment Mechanism/Community Involvement" @bind=@addanr.EstablishmentMechanism >
+                </div>
+            </div>
+             <div class="col-md-6">
+                <div class="form-group">
+                    <label for="">Key Species</label>
+                    <select class="form-control" @bind=@addanr.KeySpecies>
+                        <option>Select Species</option>
+                        <option>Glauca</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="">Average Regeneration Per Unit Area </label>
+                    <input type="text" class="form-control"   >
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="">Area of Enclosure / Area Tackled</label>
+                    <input type="number" class="form-control" @bind=@addanr.AreaofEnclosure>
+                </div>
+            </div>
+             <div class="col-md-6">
+                <div class="form-group">
+                    <label for="">Area Unit</label>
+                    <select class="form-control" @bind=@addanr.AreaUnit>
+                        <option>Select Area Unit</option>
+                        <option>Kanal</option>
+                    </select>
+                </div>
+            </div>
+             <div class="col-md-6">
+                <div class="form-group">
+                    <label for="">Total Regeneration (No. of Plants)</label>
+                    <input type="number" class="form-control" @bind=@addanr.TotalRegeneration  >
+                </div>
+            </div>
+             <div class="col-md-6">
+                <div class="form-group">
+                    <label for="">Major Intervention for Suplimenting ANR</label>
+                    <select class="form-control" @bind=@addanr.MajorInterventions>
+                        <option>Major Intervention for Suplimenting</option>
+                        <option>Sowimg</option>
+                    </select>
+                </div>
+            </div>
+                <div class="col-md-6">
+                <div class="form-group">
+                    <label for="">Success Rate</label>
+                    <select class="form-control" @bind=@addanr.EstimatedSuccess>
+                        <option>Select Succes Rate</option>
+                        <option>Less than 10%</option>
+                        <option>10-20%</option>
+                        <option>20-30%</option>
+                    </select>
+                </div>
+            </div>
+             <div class="col-md-6">
+                <div class="form-group">
+                    <label for="">Estimated Damage to Plantation</label>
+                    <input type="number" class="form-control" @bind=@addanr.EstimatedDamage  >
+                </div>
+            </div>
+             <div class="col-md-6">
+                <div class="form-group">
+                    <label for="">Estimated Damage to Plantation Acreage</label>
+                    <input type="number" class="form-control"  @bind=@addanr.EstimatedDamageAcreage>
+                </div>
+            </div>
+               <div class="col-md-6">
+                <div class="form-group">
+                    <label for="">Select Damage Reasons</label>
+                    <select class="form-control" @bind=@addanr.DamageReason>
+                        <option>Select Damage Reason</option>
+                        <option>Theft</option>
+                        <option>Fire</option>
+                        <option>Insect Attack</option>
+                    </select>
+                </div>
+            </div>
+             <div class="col-md-6">
+                <div class="form-group">
+                    <label for="">Underlying cause of degradation and solution</label>
+                    <textarea  rows="4"  class="form-control"  @bind=@addanr.UDCSolution></textarea>
+                </div>
+            </div>
+             <div class="col-md-6">
+                <div class="form-group">
+                    <label for="">Long term sustainability measures taken</label>
+                    <textarea  rows="4"  class="form-control" @bind=@addanr.LongTermMeasures ></textarea>
+                </div>
+            </div>
+             <div class="col-md-12">
+                <div class="form-group">
+                    <label for="">Plan for substitution of resource use by local communities</label>
+                    <textarea  rows="4"  class="form-control" @bind=@addanr.PlanForSbstitution ></textarea>
+                </div>
+            </div>
+            <div class="col-6">
+                <div class="form-group">
+                    <label> No. of Nagheban</label>
+                    <input type="number" class="form-control" @bind=@addanr.Neghaban />
+                </div>
+            </div>
+            <div class="col-6">
+                <div class="form-group">
+                    <label> No. of Skilled Labour</label>
+                    <input type="number" class="form-control" @bind=@addanr.SkilledLabour />
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card-footer bg-white">
+       <input type="button" class="btn btn-primary" @onclick="@CreateANR" value="Save" />
+         <input type="button" class="btn btn-primary" @onclick="@Cancel" data-dismiss="modal" value="Cancel" />
+</div>
+</div>

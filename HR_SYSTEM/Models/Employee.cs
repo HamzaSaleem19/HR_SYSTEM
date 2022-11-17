@@ -26,6 +26,7 @@ namespace HR_SYSTEM.Models
         public int CompanyRegNo { get; set; }
         [NotMapped]
         public string MobileNumber { get; set; }
+        public string FilePath { get; set; }
 
     }
 }

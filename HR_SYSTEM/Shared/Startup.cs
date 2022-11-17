@@ -36,6 +36,12 @@ namespace HR_SYSTEM.Shared
             services.AddScoped<CompanyService>();
             services.AddScoped<RoleService>();
             services.AddScoped<MobileService>();
+            services.AddScoped<AnrService>();
+            services.AddScoped<ProvinceService>();
+            services.AddScoped<DivisionService>();
+            services.AddScoped<DistrictService>();
+            services.AddScoped<TehsilService>();
+            
 
 
 

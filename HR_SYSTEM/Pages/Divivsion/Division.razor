@@ -1,0 +1,99 @@
+﻿@page "/Division"
+@if (Isvisible)
+{
+  <div class="card">
+    <div class="card-header bg-success text-white"> Add Division</div>
+    <div class="card-body">
+        <EditForm Model="adddivision">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label>Select Forest Country</label>
+                    <InputSelect class="form-control" style="width: 100%;" ValueExpression="@(() => adddivision.CountryId)" Value="@adddivision.CountryId" ValueChanged="@((int value) => GetProvinceCountrywise(value))" >
+                        <option value="0">Select Forest Country</option>
+                        @foreach (var country1 in CountryList)
+                        {
+                            <option value="@country1.Value">@country1.Text</option>
+                        }
+                       
+
+                    </InputSelect>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label>Select Province</label>
+                    <select class="form-control" @bind="@adddivision.ProvinceId" >
+                        <option value="0">Select Province</option>
+                         @foreach (var province1 in provinceList)
+                        {
+                            <option value="@province1.Value">@province1.Text</option>
+                        }
+                     
+
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label>Enter Division Name</label>
+                    <input type="text" class="form-control" @bind="@adddivision.DivisionName">
+                </div>
+            </div>
+        </div>
+   
+    </EditForm>
+    
+    </div>
+    <div class="card-footer">
+        <input type="button" class="btn btn-primary" value="Save" @onclick="@CreateDivision" />
+        <input type="button" class="btn btn-primary" data-dismiss="modal" value="Cancel" @onclick= "@Cancel" />
+    </div>
+</div>  
+}
+ 
+
+ 
+
+@if (!Isvisible)
+{
+    <div class=" float-right">
+    <button class="btn btn-success btn-md" type="button" @onclick= "ShowForm">ADD DIVISION</button>
+</div>
+}
+
+<h2 class="mt-2"> CURRENT DIVISIONS </h2>
+@if (divisionobj is null)
+{
+    <p><em>Loading... !</em></p>
+}
+else
+{
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Country</th>
+                <th>Province</th>
+                <th>Division</th>
+
+
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var divi in divisionobj)
+            {
+                <tr>
+                    <td>@divi.Countryname</td>
+                    <td>@divi.Provincename</td>
+                    <td>@divi.Divisionname</td>
+
+
+                </tr>
+            }
+        </tbody>
+
+    </table>
+}
+
+    
+

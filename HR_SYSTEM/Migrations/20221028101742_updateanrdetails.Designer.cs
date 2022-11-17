@@ -4,14 +4,16 @@ using HR_SYSTEM.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace HR_SYSTEM.Migrations
 {
     [DbContext(typeof(AppDBContext))]
-    partial class AppDBContextModelSnapshot : ModelSnapshot
+    [Migration("20221028101742_updateanrdetails")]
+    partial class updateanrdetails
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -129,13 +131,6 @@ namespace HR_SYSTEM.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Countries");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Name = "Pakistan"
-                        });
                 });
 
             modelBuilder.Entity("HR_SYSTEM.Models.Department", b =>
@@ -224,9 +219,6 @@ namespace HR_SYSTEM.Migrations
 
                     b.Property<int>("DepId")
                         .HasColumnType("int");
-
-                    b.Property<string>("FilePath")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Gender")
                         .HasColumnType("nvarchar(max)");

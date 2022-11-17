@@ -1,0 +1,137 @@
+﻿@page "/Tehsil"
+@using Microsoft.AspNetCore.Mvc.Rendering
+@if (Isvisible)
+{
+    <div class="card">
+        <div class="card-header bg-success text-white"> Add Tehsil</div>
+        <div class="card-body">
+            <EditForm Model="addtehsil">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Select Forest Country</label>
+                            <InputSelect class="form-control" style="width: 100%;" ValueExpression="@(() => addtehsil.CountryId)" Value="@addtehsil.CountryId" ValueChanged="@((int value) => GetProvinceCountrywise(value))">
+                                <option value="0">Select Forest Country</option>
+                                @foreach (var country1 in CountryList)
+                                {
+                                <option value="@country1.Value">@country1.Text</option>
+                                }
+
+
+                        </InputSelect>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label>Select Province</label>
+                        <InputSelect class="form-control" ValueExpression="@(() => addtehsil.ProvinceId)" Value="@addtehsil.ProvinceId" ValueChanged="@((int value) => GetDivisionProvincewise(value))">
+                            <option value="0">Select Province</option>
+                            @foreach (var province1 in provinceList)
+                                {
+                                <option value="@province1.Value">@province1.Text</option>
+                                }
+
+
+                        </InputSelect>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                     <div class="col-md-6">
+                    <div class="form-group">
+                        <label>Select Division</label>
+                        <InputSelect class="form-control" ValueExpression="@(() => addtehsil.DivisionId)" Value="@addtehsil.DivisionId" ValueChanged="@((int value) => GetDistrictDivisionwise(value))">
+                            <option value="0">Select Division</option>
+                            @foreach (var division1 in divisionList as List<SelectListItem>)
+                            {
+                                <option value="@division1.Value">@division1.Text</option>
+                                }
+
+
+                        </InputSelect> 
+                    </div>
+                </div>
+                     <div class="col-md-6">
+                    <div class="form-group">
+                        <label>Select District</label>
+                        <select class="form-control" @bind="@addtehsil.DistrictId">
+                            <option value="0">Select District</option>
+                            @foreach (var district1 in districtList as List<SelectListItem> )
+                                {
+                                    <option value="@district1.Value">@district1.Text</option>
+                                }
+
+
+                            </select>
+                        </div>
+                    </div>
+
+                   
+                </div>
+                <div class="row">
+                     <div class="col-md-12">
+                        <div class="form-group">
+                            <label>Enter Tehsil Name</label>
+                            <input type="text" class="form-control"  @bind="@addtehsil.TehsilName" >
+                        </div>
+                    </div>
+                </div>
+
+            </EditForm>
+
+        </div>
+        <div class="card-footer">
+            <input type="button" class="btn btn-primary" value="Save" @onclick="@CreateTehsil" />
+            <input type="button" class="btn btn-primary" data-dismiss="modal" value="Cancel" @onclick="@Cancel" />
+        </div>
+    </div>
+}
+
+
+
+
+@if (!Isvisible)
+{
+    <div class=" float-right">
+        <button class="btn btn-success btn-md" type="button" @onclick="ShowForm">ADD TEHSIL</button>
+    </div>
+}
+
+<h2 class="mt-2"> CURRENT TEHSILS </h2>
+@if (tehsilobj is null)
+{
+    <p><em>Loading... !</em></p>
+}
+else
+{
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Country</th>
+                <th>Province</th>
+                <th>Division</th>
+                <th>District</th>
+                <th>Tehsil</th>
+
+
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var tehsil in tehsilobj)
+            {
+                <tr>
+                    <td>@tehsil.Countryname</td>
+                    <td>@tehsil.Provincename</td>
+                    <td>@tehsil.Divisionname</td>
+                    <td>@tehsil.Districtname</td>
+                    <td>@tehsil.Tehsilname</td>
+
+
+                </tr>
+            }
+        </tbody>
+
+    </table>
+}
+
+

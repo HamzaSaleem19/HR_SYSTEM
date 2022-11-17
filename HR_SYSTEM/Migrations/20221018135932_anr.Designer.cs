@@ -4,14 +4,16 @@ using HR_SYSTEM.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace HR_SYSTEM.Migrations
 {
     [DbContext(typeof(AppDBContext))]
-    partial class AppDBContextModelSnapshot : ModelSnapshot
+    [Migration("20221018135932_anr")]
+    partial class anr
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -116,28 +118,6 @@ namespace HR_SYSTEM.Migrations
                     b.ToTable("Companies");
                 });
 
-            modelBuilder.Entity("HR_SYSTEM.Models.Country", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .UseIdentityColumn();
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Countries");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Name = "Pakistan"
-                        });
-                });
-
             modelBuilder.Entity("HR_SYSTEM.Models.Department", b =>
                 {
                     b.Property<int>("DepId")
@@ -165,46 +145,6 @@ namespace HR_SYSTEM.Migrations
                     b.ToTable("Departments");
                 });
 
-            modelBuilder.Entity("HR_SYSTEM.Models.District", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .UseIdentityColumn();
-
-                    b.Property<int>("DivisionId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("DivisionId");
-
-                    b.ToTable("Districts");
-                });
-
-            modelBuilder.Entity("HR_SYSTEM.Models.Division", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .UseIdentityColumn();
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("ProvinceId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ProvinceId");
-
-                    b.ToTable("Divisions");
-                });
-
             modelBuilder.Entity("HR_SYSTEM.Models.Employee", b =>
                 {
                     b.Property<int>("EmpId")
@@ -224,9 +164,6 @@ namespace HR_SYSTEM.Migrations
 
                     b.Property<int>("DepId")
                         .HasColumnType("int");
-
-                    b.Property<string>("FilePath")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Gender")
                         .HasColumnType("nvarchar(max)");
@@ -274,26 +211,6 @@ namespace HR_SYSTEM.Migrations
                     b.ToTable("MobileNumbers");
                 });
 
-            modelBuilder.Entity("HR_SYSTEM.Models.Province", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .UseIdentityColumn();
-
-                    b.Property<int>("CountryId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CountryId");
-
-                    b.ToTable("Provinces");
-                });
-
             modelBuilder.Entity("HR_SYSTEM.Models.Role", b =>
                 {
                     b.Property<int>("RoleId")
@@ -310,26 +227,6 @@ namespace HR_SYSTEM.Migrations
                     b.ToTable("Roles");
                 });
 
-            modelBuilder.Entity("HR_SYSTEM.Models.Tehsil", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .UseIdentityColumn();
-
-                    b.Property<int>("DistrictId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("DistrictId");
-
-                    b.ToTable("Tehsils");
-                });
-
             modelBuilder.Entity("HR_SYSTEM.Models.Department", b =>
                 {
                     b.HasOne("HR_SYSTEM.Models.Company", "Company")
@@ -339,28 +236,6 @@ namespace HR_SYSTEM.Migrations
                         .IsRequired();
 
                     b.Navigation("Company");
-                });
-
-            modelBuilder.Entity("HR_SYSTEM.Models.District", b =>
-                {
-                    b.HasOne("HR_SYSTEM.Models.Division", "Divisions")
-                        .WithMany("Districts")
-                        .HasForeignKey("DivisionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Divisions");
-                });
-
-            modelBuilder.Entity("HR_SYSTEM.Models.Division", b =>
-                {
-                    b.HasOne("HR_SYSTEM.Models.Province", "Provinces")
-                        .WithMany("Divisions")
-                        .HasForeignKey("ProvinceId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Provinces");
                 });
 
             modelBuilder.Entity("HR_SYSTEM.Models.Employee", b =>
@@ -393,36 +268,9 @@ namespace HR_SYSTEM.Migrations
                     b.Navigation("Employee");
                 });
 
-            modelBuilder.Entity("HR_SYSTEM.Models.Province", b =>
-                {
-                    b.HasOne("HR_SYSTEM.Models.Country", "Countries")
-                        .WithMany("Provinces")
-                        .HasForeignKey("CountryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Countries");
-                });
-
-            modelBuilder.Entity("HR_SYSTEM.Models.Tehsil", b =>
-                {
-                    b.HasOne("HR_SYSTEM.Models.District", "Districts")
-                        .WithMany("Tehsils")
-                        .HasForeignKey("DistrictId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Districts");
-                });
-
             modelBuilder.Entity("HR_SYSTEM.Models.Company", b =>
                 {
                     b.Navigation("Departments");
-                });
-
-            modelBuilder.Entity("HR_SYSTEM.Models.Country", b =>
-                {
-                    b.Navigation("Provinces");
                 });
 
             modelBuilder.Entity("HR_SYSTEM.Models.Department", b =>
@@ -430,24 +278,9 @@ namespace HR_SYSTEM.Migrations
                     b.Navigation("Employees");
                 });
 
-            modelBuilder.Entity("HR_SYSTEM.Models.District", b =>
-                {
-                    b.Navigation("Tehsils");
-                });
-
-            modelBuilder.Entity("HR_SYSTEM.Models.Division", b =>
-                {
-                    b.Navigation("Districts");
-                });
-
             modelBuilder.Entity("HR_SYSTEM.Models.Employee", b =>
                 {
                     b.Navigation("MobileNos");
-                });
-
-            modelBuilder.Entity("HR_SYSTEM.Models.Province", b =>
-                {
-                    b.Navigation("Divisions");
                 });
 
             modelBuilder.Entity("HR_SYSTEM.Models.Role", b =>

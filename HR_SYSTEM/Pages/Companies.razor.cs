@@ -18,7 +18,8 @@ namespace HR_SYSTEM.Pages
         public NavigationManager NavigationManager { get; set; }
         protected override async Task OnInitializedAsync()
         {
-            Compob = await companyService.GetAllCompaniesAsync();
+            Compob = await companyService.GetAllCompaniesAsync
+                ();
         }
         public HR_SYSTEM.Models.Company addcompanydata = new();
         protected async void CreateCompany()

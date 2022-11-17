@@ -1,4 +1,5 @@
 ﻿using HR_SYSTEM.Models;
+using HR_SYSTEM.ViewModels;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -20,7 +21,11 @@ namespace HR_SYSTEM.Services
 
         public async Task<List<Company>> GetAllCompaniesAsync()
         {
-            return await _appDBContext.Companies.ToListAsync();
+            // return await _appDBContext.Companies.ToListAsync();
+            return await (from c in _appDBContext.Companies
+                          join d in _appDBContext.Departments on c.CompanyRegNo equals d.CompanyRegNo
+                          select c).ToListAsync();
+
         }
         public async Task<bool> InsertCompanyAsync(Company company)
         {
@@ -83,6 +88,15 @@ namespace HR_SYSTEM.Services
             }
 
             return true;
+        }
+        public async Task<DashboardViewModel> GetDashboard()
+        {
+            DashboardViewModel d = new();
+            d.CompanyCount = _appDBContext.Companies.Count();
+            d.DepartmentCount = _appDBContext.Departments.Count();
+            d.EmployeeCount = _appDBContext.Employees.Count();
+            d.RoleCount = _appDBContext.Roles.Count();
+            return d;
         }
     }
 }

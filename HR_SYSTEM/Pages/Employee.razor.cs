@@ -4,10 +4,19 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System;
+using Microsoft.AspNetCore.Components.Forms;
+using System.IO;
+using Microsoft.AspNetCore.Hosting;
+
 namespace HR_SYSTEM.Pages
 {
     public partial class Employee
     {
+        [Inject]
+        public IWebHostEnvironment Environment { get; set; }
+        public string rootFolder = "";
+
+        public bool IsBusy { get; set; }
         public List<SelectListItem> CompanyList = new();
         public List<SelectListItem> DepartmentList = new();
         public List<SelectListItem> RoleList = new();
@@ -73,6 +82,64 @@ namespace HR_SYSTEM.Pages
             {
                 throw;
             }
+        }
+
+        public bool isLoading { get; set; }
+        public List<String> ContacrPersonFileName { get; set; } = new();
+        public string ErrorMessage = "";
+        public long maxFileSize = 1024 * 15000;
+        public int maxAllowedFiles = 5;
+        private async  Task ContactPersonLoadFiles(InputFileChangeEventArgs e)
+        {
+            isLoading = true;
+            ContacrPersonFileName = new List<string>();
+            // ContractorLocalFileName = new List<string>();
+            foreach (var file in e.GetMultipleFiles(maxAllowedFiles))
+            {
+                try
+                {
+                    Stream stream = file.OpenReadStream(maxFileSize);
+                    var trustedFileNameForFileStorage = Path.GetRandomFileName();
+                    if (File.Exists(Path.Combine(rootFolder, file.Name)))
+                    {
+                        var result = Path.GetFileName(file.Name);
+                        var startIndex = result.LastIndexOf('.');
+                        var filenamewithoutextension = result.Substring(0, startIndex);
+                        var FileExtension = result.Substring(startIndex, 4);
+                        var filename = filenamewithoutextension + "-" + DateTime.Now.ToString("ddmmyyyy") + FileExtension;
+                        var path = Path.Combine(Environment.ContentRootPath, "wwwroot/Upload Images", filename);
+                        await using FileStream fs = new(path, FileMode.Create);
+                        await file.OpenReadStream(maxFileSize).CopyToAsync(fs);
+                        //FileName.Add(filename);
+                        obj.FilePath = filename;
+
+                    }
+                    else
+                    {
+                        var result = Path.GetFileName(file.Name);
+
+                        var startIndex = result.LastIndexOf('.');
+                        var filenamewithoutextension = result.Substring(0, startIndex);
+                        var FileExtension = result.Substring(startIndex, 4);
+                        var filename = filenamewithoutextension + FileExtension;
+                        var path = Path.Combine(Environment.ContentRootPath, "wwwroot/Upload Images", filename);
+                        await using FileStream fs = new(path, FileMode.Create);
+                        await file.OpenReadStream(maxFileSize).CopyToAsync(fs);
+                        obj.FilePath = filename;
+                    }
+                    StateHasChanged();
+                }
+                catch (Exception ex)
+                {
+
+                    ErrorMessage = ex.Message.ToString();
+                    StateHasChanged();
+                }
+
+                isLoading = false;
+            }
+
+
         }
     }
 }

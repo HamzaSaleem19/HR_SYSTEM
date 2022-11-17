@@ -4,14 +4,16 @@ using HR_SYSTEM.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace HR_SYSTEM.Migrations
 {
     [DbContext(typeof(AppDBContext))]
-    partial class AppDBContextModelSnapshot : ModelSnapshot
+    [Migration("20221028102436_seeding")]
+    partial class seeding
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -224,9 +226,6 @@ namespace HR_SYSTEM.Migrations
 
                     b.Property<int>("DepId")
                         .HasColumnType("int");
-
-                    b.Property<string>("FilePath")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Gender")
                         .HasColumnType("nvarchar(max)");
