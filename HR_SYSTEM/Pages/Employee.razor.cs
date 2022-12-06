@@ -7,6 +7,7 @@ using System;
 using Microsoft.AspNetCore.Components.Forms;
 using System.IO;
 using Microsoft.AspNetCore.Hosting;
+using HR_SYSTEM.ViewModels;
 
 namespace HR_SYSTEM.Pages
 {
@@ -20,16 +21,18 @@ namespace HR_SYSTEM.Pages
         public List<SelectListItem> CompanyList = new();
         public List<SelectListItem> DepartmentList = new();
         public List<SelectListItem> RoleList = new();
-        public List<HR_SYSTEM.Models.Employee> Empob = new();
+        public EmployeePaginationVM singleRecord = new();
+        public List<EmployeeVM> Empob = new();
         [Inject]
         public NavigationManager NavigationManager { get; set; }
         [Inject]
         public DepartmentService departmentService { get; set; }
         protected override async Task OnInitializedAsync()
         {
-            Empob = await employeeService.GetAllEmployeesAsync();
+            await LoadRecord();
+            //Empob = await employeeService.GetAllEmployeesAsync(dTO);
             CompanyList = await departmentService.GetCompanies();
-            // DepartmentList = await employeeService.GetDepartments();
+            DepartmentList = await employeeService.GetDepartments();
             RoleList = await employeeService.GetRoles();
         }
         public async void GetDepartmentCompanywise(int companyid)
@@ -61,8 +64,11 @@ namespace HR_SYSTEM.Pages
         {
             try
             {
+                obj = new();
                 DepartmentList = await employeeService.GetDepartments();
                 obj = await employeeService.GetEmployeeAsync(EmpId);
+                if (obj == null)
+                    obj = new();
                 //NavigationManager.NavigateTo("Employees");
                 StateHasChanged();
             }
@@ -89,7 +95,7 @@ namespace HR_SYSTEM.Pages
         public string ErrorMessage = "";
         public long maxFileSize = 1024 * 15000;
         public int maxAllowedFiles = 5;
-        private async  Task ContactPersonLoadFiles(InputFileChangeEventArgs e)
+        private async Task ContactPersonLoadFiles(InputFileChangeEventArgs e)
         {
             isLoading = true;
             ContacrPersonFileName = new List<string>();
@@ -140,6 +146,29 @@ namespace HR_SYSTEM.Pages
             }
 
 
+        }
+        EmployeePaginationVM Epagination = new();
+        PaginationDTO dTO = new();
+        private async Task SelectedPage(int page)
+        {
+            /// Epagination.currentPage = page;
+            await LoadRecord(page);
+        }
+        int totalcount = 0;
+        public async Task LoadRecord(int page = 1, int quantityPerPage = 3)
+        {
+            Epagination = new();
+            Epagination.currentPage = page;
+            dTO = new PaginationDTO() { Page = page, QuantityPerPage = quantityPerPage };
+            singleRecord = await employeeService.GetAllEmployeesAsync(dTO);
+            if (singleRecord != null)
+            {
+                Empob = singleRecord.lstAllRecords;
+                Epagination.TotalPages = singleRecord.TotalPages;
+                totalcount = Epagination.TotalCount = singleRecord.TotalCount;
+
+            }
+            StateHasChanged();
         }
     }
 }

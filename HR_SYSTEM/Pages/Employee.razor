@@ -7,11 +7,44 @@
     .rcorners3 {
         border-radius: 50px;
         background: #73AD21;
-        /*padding: 20px;
-        width: 200px;*/
         height: 50px;
-        width:50px;
+        width: 50px;
     }
+
+    .modal-header {
+        background-color: #00A82D;
+        color: #fff;
+        padding: 5px;
+        text-align: justify;
+    }
+
+    .close {
+        color: #fff;
+        opacity: unset;
+    }
+
+    .modal-dialog .overlay {
+        position: relative;
+        height: unset;
+    }
+
+    .modal-dialog {
+        position: fixed;
+        height: unset;
+        margin: unset !important;
+    }
+
+    .modal.show.fade.right .modal-dialog {
+        right: 0 !important;
+    }
+
+    .modal-dialog-scrollable {
+        max-height: 100vh;
+    }
+
+        .modal-dialog-scrollable .modal-content {
+            max-height: 100vh;
+        }
 </style>
 <button type="button" class="btn btn-primary float-right" data-toggle="modal" data-target="#exampleModal">
     Add Employee
@@ -34,7 +67,7 @@ else
                 <th>Department</th>
                 <th>Role</th>
                 <th>Company</th>
-                <th>Mobile Number Count</th>
+                <th>Mobile#</th>
                 <th>Action</th>
             </tr>
         </thead>
@@ -47,22 +80,25 @@ else
                     <td>@emp.Cnic</td>
                     <td>@emp.Gender</td>
                     <td>@emp.Address</td>
-                    <td>@emp.Department?.DepName</td>
-                    <td>@emp.Role?.RoleType</td>
-                    <td>@emp.Department.Company.Name</td>
-                    <td><HR_SYSTEM.Components.TooltipComponent Text="@emp.MobileNumber">@emp.MobileNos?.Count()</HR_SYSTEM.Components.TooltipComponent></td>
+                    <td>@emp.Department</td>
+                    <td>@emp.Role</td>
+                    <td>@emp.Company</td>
+                    <td><HR_SYSTEM.Components.TooltipComponent Text="@emp.MobileNumber">@emp.SingleMB</HR_SYSTEM.Components.TooltipComponent></td>
                     <td>
-                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" @onclick="()=>UpdateEmployee(emp.EmpId)">  Edit </button>
-                        <button type="button" class="btn btn-danger" @onclick="()=>DeleteEmployee(emp.EmpId)">  Delete </button>
+                    <button type="button" class="btn btn-primary btn-sm mt-2" data-toggle="modal" data-target="#exampleModal" @onclick="()=>UpdateEmployee(emp.EmpId)"> <i class="fa fa-edit"></i> </button>
+                    <button type="button" class="btn btn-danger btn-sm mt-2" @onclick="()=>DeleteEmployee(emp.EmpId)"> <i class="fa fa-trash"></i> </button>
                     </td>
                 </tr>
             }
         </tbody>
     </table>
+    <Pagination TotaPagesQuantity="Epagination.TotalPages" TotalCount="@totalcount" CurrentPage="Epagination.currentPage" Radius="2"
+            SelectedPage="SelectedPage" ShowrecordTable="@dTO.QuantityPerPage"></Pagination>
+    <span class="text-muted">Total Count: @totalcount</span>
 }
 <!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
+<div class="modal right fade" id="exampleModal" data-animation="animate__backInRight" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-scrollable" style="min-width:400px;">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel">@(obj.EmpId==0?"Add New Employee":"Edit Employee")</h5>
@@ -74,7 +110,7 @@ else
                 <EditForm Model="obj" OnValidSubmit="@CreateEmployee">
                     <DataAnnotationsValidator />
                     <div class="row">
-                        <div class="col-md-8">
+                        <div class="col-md-12">
                             <div class="form-group">
                                 <label for="Name" class="control-label">Name*</label>
                                 <input form="Name" class="form-control" @bind="@obj.Name" />
@@ -140,20 +176,25 @@ else
                         </div>
                     </div>
 
-                    <div class="row">
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <input type="submit" class="btn btn-primary" value="Save" />
 
-                                <input type="button" class="btn btn-primary float-md-right" @onclick="@Cancel" data-dismiss="modal" value="Cancel" />
-                            </div>
+                    <div>
+                        <div class="form-group">
+                            <input type="submit" class="btn btn-primary   bg-success" value="Save" />
+                            <input type="button" class="btn btn-primary   bg-danger" @onclick="@Cancel" data-dismiss="modal" value="Cancel" />
                         </div>
                     </div>
+
                 </EditForm>
             </div>
         </div>
     </div>
 </div>
+
+
+
+
+
+
 
 
 

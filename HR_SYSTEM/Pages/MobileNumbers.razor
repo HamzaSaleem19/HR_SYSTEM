@@ -28,8 +28,8 @@ else
                     <td>@mobnumb.MobileNumber</td>
                     <td>@mobnumb.Employee?.Name</td>
                     <td>
-                        <button type="button" class="btn btn-primary " data-toggle="modal" data-target="#exampleModal" @onclick="()=> UpdatMobileNumber(mobnumb.MobileId)">  Edit </button>
-                        <button type="button" class="btn btn-danger" @onclick="()=>DeleteMobileNumber(mobnumb.MobileId)">  Delete </button>
+                        <button type="button" class="btn btn-primary btn-sm " data-toggle="modal" data-target="#exampleModal" @onclick="()=> UpdatMobileNumber(mobnumb.MobileId)">  <i class="fa fa-edit"></i> </button>
+                        <button type="button" class="btn btn-danger btn-sm" @onclick="()=>DeleteMobileNumber(mobnumb.MobileId)"> <i class="fa fa-trash"></i> </button>
                     </td>
 
                     <td>
@@ -89,7 +89,7 @@ else
                     </div>
 
                     <div class="row">
-                        <div class="col-md-8">
+                        <div class="col-md-12">
                             <div class="form-group">
                                 <label for="Mobile Number" class="control-label">Mobile Number</label>
                                 <input form="Mobile Number" class="form-control" @bind="@addnumber.MobileNumber" />

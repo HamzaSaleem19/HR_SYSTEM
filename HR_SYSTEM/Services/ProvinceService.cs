@@ -53,5 +53,16 @@ namespace HR_SYSTEM.Services
                                 Provinceid=p.Id
                             }).OrderByDescending(x => x.Provinceid).ToListAsync();
         }
+        public async Task<bool> DeleteProvinceAsync(int ProvinceId)//delete province
+        {
+            var checkprovincerecord = await _appDBContext.Provinces.Where(x => x.Id == ProvinceId).FirstOrDefaultAsync();
+            if (checkprovincerecord != null)
+            {
+                _appDBContext.Provinces.Remove(checkprovincerecord);
+                await _appDBContext.SaveChangesAsync();
+            }
+
+            return true;
+        }
     }
 }

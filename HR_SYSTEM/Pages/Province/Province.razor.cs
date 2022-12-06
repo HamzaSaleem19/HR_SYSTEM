@@ -2,6 +2,7 @@
 using HR_SYSTEM.ViewModels;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -50,6 +51,33 @@ namespace HR_SYSTEM.Pages.Province
         protected async  Task  GetListofprovinces()
         {
             provinceobj = await provinceService.GetAllProvincesAsync();
+        }
+
+        protected async void UpdateProvince(int ProvinceId)
+        {
+            try
+            {
+                Isvisible = true;
+                CountryList = await provinceService.GetCountries();
+                provinceobj = await provinceService.GetAllProvincesAsync();
+                StateHasChanged();
+            }
+            catch (System.Exception ex)
+            {
+                throw;
+            }
+        }
+        protected async void DeleteProvince(int province)
+        {
+            try
+            {
+                await provinceService.DeleteProvinceAsync( province);
+                NavigationManager.NavigateTo("Province", true);
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
         }
 
     }

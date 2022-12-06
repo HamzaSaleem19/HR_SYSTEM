@@ -14,7 +14,7 @@ else
     <table class="table table-striped">
         <thead>
             <tr>
-                <th>Role Id</th>
+                <th>Role Id</th> 
                 <th>Role</th>
                 <th>Action</th>
             </tr>
@@ -26,8 +26,8 @@ else
                     <td>@role.RoleId</td>
                     <td>@role.RoleType</td>
                     <td>
-                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" @onclick="()=>UpdateRole(role.RoleId)">  Edit </button>
-                        <button type="button" class="btn btn-danger" @onclick="()=>DeleteRole(role.RoleId)">  Delete </button>
+                        <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#exampleModal" @onclick="()=>UpdateRole(role.RoleId)"> <i class="fa fa-edit"></i> </button>
+                        <button type="button" class="btn btn-danger btn-sm" @onclick="()=>DeleteRole(role.RoleId)">  <i class="fa fa-trash"></i> </button>
                     </td>
                 </tr>
             }
@@ -48,7 +48,7 @@ else
             <div class="modal-body">
                 <form>
                     <div class="row">
-                        <div class="col-md-8">
+                        <div class="col-md-12">
                             <div class="form-group">
                                 <label for="Name" class="control-label">Role</label>
                                 <input form="Name" class="form-control" @bind="@addrole.RoleType" />

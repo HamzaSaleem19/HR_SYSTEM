@@ -2,14 +2,18 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using HR_SYSTEM.Helper;
 using HR_SYSTEM.Models;
+using HR_SYSTEM.ViewModels;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 
 
 namespace HR_SYSTEM.Services
 {
-    public class EmployeeService
+    public class EmployeeService : ControllerBase
     {
         private readonly AppDBContext _appDBContext;
 
@@ -21,33 +25,65 @@ namespace HR_SYSTEM.Services
         /// Get list of employees
         /// </summary>
         /// <returns></returns>
-        public async Task<List<Employee>> GetAllEmployeesAsync()
+        public async Task<EmployeePaginationVM> GetAllEmployeesAsync([FromQuery] PaginationDTO pdto)
         {
             try
             {
-                var employeeData = await _appDBContext.Employees.Include(d => d.MobileNos).Include(d => d.Department).Include(c=>c.Department.Company).Include(r => r.Role).ToListAsync();
-                foreach (var item in employeeData)
+               // await Task.Delay(9000);//Loader
+                EmployeePaginationVM Epm = new();
+                var queryable = _appDBContext.Employees.Include(d => d.MobileNos).Include(d => d.Department).Include(c => c.Department.Company).Include(r => r.Role).Select(x => new EmployeeVM()
                 {
-                    foreach (var item1 in item.MobileNos)
-                    {
+                    EmpId=x.EmpId,
+                    Name = x.Name,
+                    Cnic = x.Cnic,
+                    Gender = x.Gender,
+                    Address = x.Address,
+                    Department = x.Department.DepName,
+                    Role = x.Role.RoleType,
+                    Company = x.Department.Company.Name,
+                    MobileNumber = String.Join(",  ", x.MobileNos.Select(x => x.MobileNumber).ToArray()),
+                    SingleMB = x.MobileNos.OrderByDescending(x =>x.MobileId).Select(x => x.MobileNumber).FirstOrDefault(),
+                    FilePath = x.FilePath
 
-                        item.MobileNumber += String.Join(",  " ,"  "+item1.MobileNumber);
-                    }
-                }
-                var Listofemployee = (from e in _appDBContext.Employees
-                                      join m in _appDBContext.MobileNumbers on e.EmpId equals m.EmpId
-                                      join d in _appDBContext.Departments on e.DepId equals d.DepId
-                                      join c in _appDBContext.Companies on d.CompanyRegNo equals c.CompanyRegNo
-                                      join r in _appDBContext.Roles on e.RoleId equals r.RoleId
-                                      select e).ToList();
+                });
+                //foreach (var item in queryable)
+                //{
+                //    foreach (var item1 in item.MobileNos)
+                //    {
+
+                //        item.MobileNumber += String.Join(",  " ,"  "+item1.MobileNumber);
+                //    }
+                //}
+                //var Listofemployee = (from e in _appDBContext.Employees
+                //                      join m in _appDBContext.MobileNumbers on e.EmpId equals m.EmpId
+                //                      join d in _appDBContext.Departments on e.DepId equals d.DepId
+                //                      join c in _appDBContext.Companies on d.CompanyRegNo equals c.CompanyRegNo
+                //                      join r in _appDBContext.Roles on e.RoleId equals r.RoleId
+                //                      select new EmployeeVM()
+                //                      {
+                //                          Name = e.Name,
+                //                          Cnic = e.Cnic,
+                //                          Gender = e.Gender,
+                //                          Address = e.Address,
+                //                          Role = r.RoleType,
+                //                          Company = c.Name,
+                //                          MobileNumber = m.MobileNumber,
+                //                          Department=d.DepName,
+                //                          FilePath=e.FilePath
+
+                //                      });
 
 
 
+                Epm.TotalPages = await HttpContext.InsertPaginationParameterInResponse(queryable, pdto.QuantityPerPage);
+                Epm.lstAllRecords = await queryable.Paginate(pdto).ToListAsync();
+                // Epm.All = queryable.ToList();
+                Epm.TotalCount = queryable.Count();
 
 
-                
-                return Listofemployee;
+                return Epm;
             }
+
             catch (Exception ex)
             {
                 throw;
@@ -56,7 +92,8 @@ namespace HR_SYSTEM.Services
         public async Task<bool> InsertEmployeeAsync(Employee employee)
         {
             try
-            {if(employee.EmpId == 0)
+            {
+                if (employee.EmpId == 0)
                 {
                     await _appDBContext.Employees.AddAsync(employee);
                 }

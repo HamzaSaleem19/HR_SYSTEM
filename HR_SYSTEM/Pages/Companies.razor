@@ -29,8 +29,8 @@ else
                     <td>@comp.Address </td>
                     <td>
                         <span>
-                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" @onclick="()=>UpdateCompany(comp.CompanyRegNo)">  Edit </button>
-                            <button type="button" class="btn btn-danger" @onclick="()=>DeleteCompany(comp.CompanyRegNo)">  Delete </button>
+                            <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#exampleModal" @onclick="()=>UpdateCompany(comp.CompanyRegNo)"><i class="fa fa-edit"></i> </button>
+                            <button type="button" class="btn btn-danger btn-sm" @onclick="()=>DeleteCompany(comp.CompanyRegNo)"> <i class="fa fa-trash"></i> </button>
                         </span>
                     </td>
                 </tr>
@@ -53,7 +53,7 @@ else
                 <EditForm Model="addcompanydata" OnValidSubmit="@CreateCompany">
                     <DataAnnotationsValidator/>
                     <div class="row">
-                        <div class="col-md-8">
+                        <div class="col-md-12">
                             <div class="form-group">
                                 <label for="Name" class="control-label">Company Name *</label>
                                 <input form="Name" class="form-control" @bind="@addcompanydata.Name" />

@@ -34,8 +34,8 @@ else
                     <td>@dep.Location</td>
                     <td>@dep.Company?.Name</td>
                     <td>
-                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" @onclick="()=>UpdateDepartment(dep.DepId)">  Edit </button>
-                        <button type="button" class="btn btn-danger" @onclick="()=>DeleteDepartment(dep.DepId)">  Delete </button>
+                        <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#exampleModal" @onclick="()=>UpdateDepartment(dep.DepId)">  <i class="fa fa-edit"></i></button>
+                        <button type="button" class="btn btn-danger btn-sm" @onclick="()=>DeleteDepartment(dep.DepId)"> <i class="fa fa-trash"></i> </button>
                     </td>
 
                 </tr>
@@ -66,7 +66,7 @@ else
                         }
                     </InputSelect>
                     <div class="row">
-                        <div class="col-md-8">
+                        <div class="col-md-12">
                             <div class="form-group">
                                 <label for="Name" class="control-label">Department Name</label>
                                 <input form="Name" class="form-control" @bind="@obj1.DepName" />

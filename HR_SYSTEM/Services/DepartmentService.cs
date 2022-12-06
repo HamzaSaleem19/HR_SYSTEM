@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using HR_SYSTEM.Models;
+using HR_SYSTEM.ViewModels;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 
@@ -18,7 +20,7 @@ namespace HR_SYSTEM.Services
             _appDBContext = appDBContext;
         }
 
-        public async Task<List<Department>> GetAllDepartmentsAsync()
+        public async Task<DepartmentPaginationVM> GetAllDepartmentsAsync([FromQuery] PaginationDTO pdto)
         {
             return await _appDBContext.Departments.Include(x => x.Company).ToListAsync();
         }
