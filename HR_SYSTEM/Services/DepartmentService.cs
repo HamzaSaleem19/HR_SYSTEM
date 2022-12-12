@@ -20,7 +20,7 @@ namespace HR_SYSTEM.Services
             _appDBContext = appDBContext;
         }
 
-        public async Task<DepartmentPaginationVM> GetAllDepartmentsAsync([FromQuery] PaginationDTO pdto)
+        public async Task<List<Department>> GetAllDepartmentsAsync()
         {
             return await _appDBContext.Departments.Include(x => x.Company).ToListAsync();
         }
